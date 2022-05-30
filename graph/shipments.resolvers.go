@@ -5,19 +5,15 @@ package graph
 
 import (
 	"context"
-	"errors"
 	"fmt"
-	"strconv"
 
 	"github.com/Henoch-kargo/kargo-trucks/graph/model"
 )
 
 func (r *mutationResolver) SaveShipment(ctx context.Context, id *string, name string, origin string, destination string, deliveryDate string, truckID string) (*model.Shipment, error) {
-	intTruckId, err := strconv.Atoi(truckID)
-	intId, err := strconv.Atoi(id)
-	if _, ok := r.Trucks[intTruckId]; !ok {
-		return nil, errors.New("TRUCK_UNAVAILABLE")
-	}
+	// if ok := r.Trucks[truckID]; len(ok)<1 {
+	// 	return nil, errors.New("TRUCK_UNAVAILABLE")
+	// }
 
 	shipment := &model.Shipment{
 		ID:           fmt.Sprintf("Shipment-%d", len(r.Shipments)+1),
@@ -27,7 +23,7 @@ func (r *mutationResolver) SaveShipment(ctx context.Context, id *string, name st
 		DeliveryDate: deliveryDate,
 		TruckID:      truckID,
 	}
-	r.Shipments[intId] = shipment
+	r.Shipments[shipment.ID] = *shipment
 	return shipment, nil
 }
 

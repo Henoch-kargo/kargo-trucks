@@ -1,5 +1,5 @@
 type Shipment{
-    ID: String!
+    ID: ID!
     name: String!
     origin: String!
     destination: String!

@@ -7,6 +7,6 @@ import ("github.com/Henoch-kargo/kargo-trucks/graph/model")
 // It serves as dependency injection for your app, add any dependencies you require here.
 
 type Resolver struct{
-	Trucks []*model.Truck
-	Shipments []*model.Shipment
+	Trucks map[string]model.Truck
+	Shipments map[string]model.Shipment
 }

@@ -16,17 +16,13 @@ func (r *mutationResolver) SaveTruck(ctx context.Context, id *string, plateNo st
 		ID:      fmt.Sprintf("TRUCK-%d", len(r.Trucks)+1),
 		PlateNo: plateNo,
 	}
-	r.Trucks = append(r.Trucks, truck)
+	r.Trucks[truck.ID] = *truck
 	return truck, nil
 }
 
-// func (r *mutationResolver) DeleteTruck(ctx context.Context, id *string) (*model.Truck, error) {
-	// truck := &model.Truck{
-	// 	ID:      fmt.Sprintf("TRUCK-%d", len(r.Trucks)+1),
-	// }
-	// r.Trucks = delete(r.Trucks, truck)
-	// return truck, nil
-// }
+func (r *mutationResolver) DeleteTruck(ctx context.Context, id *string) (*model.Truck, error) {
+	panic(fmt.Errorf("not implemented"))
+}
 
 func (r *queryResolver) PaginatedTrucks(ctx context.Context) ([]*model.Truck, error) {
 	panic(fmt.Errorf("not implemented"))
