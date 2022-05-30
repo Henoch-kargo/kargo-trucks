@@ -6,14 +6,15 @@ package graph
 import (
 	"context"
 	"fmt"
+	"errors"
 
 	"github.com/Henoch-kargo/kargo-trucks/graph/model"
 )
 
 func (r *mutationResolver) SaveShipment(ctx context.Context, id *string, name string, origin string, destination string, deliveryDate string, truckID string) (*model.Shipment, error) {
-	// if ok := r.Trucks[truckID]; len(ok)<1 {
-	// 	return nil, errors.New("TRUCK_UNAVAILABLE")
-	// }
+	if _,ok := r.Trucks[truckID]; !ok {
+		return nil, errors.New("TRUCK_UNAVAILABLE")
+	}
 
 	shipment := &model.Shipment{
 		ID:           fmt.Sprintf("Shipment-%d", len(r.Shipments)+1),
