@@ -6,6 +6,8 @@ package graph
 import (
 	"context"
 	"fmt"
+	"net/smtp"
+	"os"
 
 	"github.com/Henoch-kargo/kargo-trucks/graph/generated"
 	"github.com/Henoch-kargo/kargo-trucks/graph/model"
@@ -22,6 +24,41 @@ func (r *mutationResolver) SaveTruck(ctx context.Context, id *string, plateNo st
 
 func (r *mutationResolver) DeleteTruck(ctx context.Context, id *string) (*model.Truck, error) {
 	panic(fmt.Errorf("not implemented"))
+}
+
+func (r *mutationResolver) SendTruckDatatoEmail(ctx context.Context, email string) (*model.Email, error) {
+	fmt.Println(email)
+	emails := &model.Email{
+		Email: email,
+	}
+
+	from := "henoch0chendra@gmail.com"
+	password := os.Getenv("EMAILPASSWORD")
+
+	// Receiver email address.
+	to := []string{
+		email,
+		"henoch0chendra@gmail.com",
+	}
+
+	// // smtp server configuration.
+	smtpHost := "smtp.gmail.com"
+	smtpPort := "587"
+
+	// // Message.
+	message := []byte("This is a test email message.")
+
+	// // Authentication.
+	auth := smtp.PlainAuth("", from, password,
+		smtpHost)
+
+	// // Sending email.
+	err := smtp.SendMail(smtpHost+":"+smtpPort, auth, from, to, message)
+	if err != nil {
+		fmt.Println(err)
+	}
+	fmt.Println("Email Sent Successfully!")
+	return emails, nil
 }
 
 func (r *queryResolver) PaginatedTrucks(ctx context.Context) ([]*model.Truck, error) {

@@ -5,14 +5,14 @@ package graph
 
 import (
 	"context"
-	"fmt"
 	"errors"
+	"fmt"
 
 	"github.com/Henoch-kargo/kargo-trucks/graph/model"
 )
 
 func (r *mutationResolver) SaveShipment(ctx context.Context, id *string, name string, origin string, destination string, deliveryDate string, truckID string) (*model.Shipment, error) {
-	if _,ok := r.Trucks[truckID]; !ok {
+	if _, ok := r.Trucks[truckID]; !ok {
 		return nil, errors.New("TRUCK_UNAVAILABLE")
 	}
 

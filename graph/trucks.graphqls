@@ -3,10 +3,18 @@ type Truck {
   plateNo: String!
 }
 
+type Email{
+    email: String!
+}
+
 type Query {
  paginatedTrucks: [Truck!]!
 }
+
 type Mutation {
  saveTruck(id: ID, plateNo: String!): Truck!
  deleteTruck(id: ID): Truck!
+ sendTruckDatatoEmail(email: String!): Email!
 }
+
+
